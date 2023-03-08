@@ -1,4 +1,4 @@
-﻿namespace Hw2Task1
+namespace Hw2Task1
 {
     /// <summary>Internal class Program.</summary>
     internal class Program
@@ -27,7 +27,7 @@
                                                  + "To get this message again use \"" + HelpCommand + "\"\n"
                                                  + "To exit the application use \"" + ExitCommand + "\"";
 
-        private const string IncorrectCommandResponse = "Incorrect command! Use " + HelpCommand;
+        private const string IncorrectCommandResponse = "Incorrect command! Use \"" + HelpCommand + "\" to get help";
         private const string GreetingsString = "Welcome to console interface of trie (If you don't know what it is, check out http://neerc.ifmo.ru/wiki/index.php?title=Бор).\n"
                                              + "To interact with trie you can use these commands:\n" + HelpCommandResponse;
 
