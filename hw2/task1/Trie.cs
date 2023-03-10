@@ -25,9 +25,9 @@ namespace Hw2Task1
         /// <summary>Gets amount of strings contained in trie.</summary>
         public int Size { get; private set; }
 
-        private Dictionary<char, Trie> Next { get; set; }
+        private Dictionary<char, Trie> Next;
 
-        private bool IsTerminal { get; set; }
+        private bool IsTerminal;
 
         /// <summary>Add new string into trie.</summary>
         /// <param name="element">String to add into trie.</param>
