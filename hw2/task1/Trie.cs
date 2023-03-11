@@ -3,11 +3,15 @@ namespace Hw2Task1
     /// <summary>Represetnts a collection of strings.</summary>
     public class Trie
     {
+        private Dictionary<char, Trie> next;
+
+        private bool isTerminal;
+
         /// <summary>Initializes a new instance of the <see cref="Trie"/> class that contains no strings in it.</summary>
         public Trie()
         {
-            this.Next = new Dictionary<char, Trie>();
-            this.IsTerminal = false;
+            this.next = new Dictionary<char, Trie>();
+            this.isTerminal = false;
             this.Size = 0;
         }
 
@@ -24,10 +28,6 @@ namespace Hw2Task1
 
         /// <summary>Gets amount of strings contained in trie.</summary>
         public int Size { get; private set; }
-
-        private Dictionary<char, Trie> Next;
-
-        private bool IsTerminal;
 
         /// <summary>Add new string into trie.</summary>
         /// <param name="element">String to add into trie.</param>
@@ -65,24 +65,24 @@ namespace Hw2Task1
         {
             if (curIndex == element.Length)
             {
-                bool wasTerminal = this.IsTerminal;
-                this.IsTerminal = true;
+                bool wasTerminal = this.isTerminal;
+                this.isTerminal = true;
                 if (!wasTerminal)
                 {
                     this.Size += 1;
                 }
-                
+
                 return !wasTerminal;
             }
 
             char curChar = element[curIndex];
 
-            if (!this.Next.ContainsKey(curChar))
+            if (!this.next.ContainsKey(curChar))
             {
-                this.Next[curChar] = new Trie();
+                this.next[curChar] = new Trie();
             }
 
-            bool wasAdded = this.Next[curChar].Add(element, curIndex + 1);
+            bool wasAdded = this.next[curChar].Add(element, curIndex + 1);
             if (wasAdded)
             {
                 this.Size += 1;
@@ -95,12 +95,12 @@ namespace Hw2Task1
         {
             if (curIndex == element.Length)
             {
-                return this.IsTerminal;
+                return this.isTerminal;
             }
 
             char curChar = element[curIndex];
-            return this.Next.ContainsKey(curChar)
-                ? this.Next[curChar].Contains(element, curIndex + 1)
+            return this.next.ContainsKey(curChar)
+                ? this.next[curChar].Contains(element, curIndex + 1)
                 : false;
         }
 
@@ -108,28 +108,28 @@ namespace Hw2Task1
         {
             if (curIndex == element.Length)
             {
-                bool wasTerminal = this.IsTerminal;
-                this.IsTerminal = false;
+                bool wasTerminal = this.isTerminal;
+                this.isTerminal = false;
                 return wasTerminal;
             }
 
             char curChar = element[curIndex];
 
-            if (!this.Next.ContainsKey(curChar))
+            if (!this.next.ContainsKey(curChar))
             {
                 return false;
             }
 
-            Trie nextTrie = this.Next[curChar];
+            Trie nextTrie = this.next[curChar];
 
             if (!nextTrie.Remove(element, curIndex + 1))
             {
                 return false;
             }
 
-            if (!nextTrie.IsTerminal && nextTrie.Next.Count == 0)
+            if (!nextTrie.isTerminal && nextTrie.next.Count == 0)
             {
-                this.Next.Remove(curChar);
+                this.next.Remove(curChar);
             }
 
             this.Size -= 1;
@@ -145,8 +145,8 @@ namespace Hw2Task1
             }
 
             char curChar = prefix[curIndex];
-            return this.Next.ContainsKey(curChar)
-                ? this.Next[curChar].HowManyStartsWithPrefix(prefix, curIndex + 1)
+            return this.next.ContainsKey(curChar)
+                ? this.next[curChar].HowManyStartsWithPrefix(prefix, curIndex + 1)
                 : 0;
         }
     }
