@@ -86,7 +86,7 @@ public class ArrayStack<T> : IEnumerable<T>
         public Enumerator(ArrayStack<T> stack)
         {
             this.stack = stack;
-            this.curIndex = stack.arr.Length;
+            this.curIndex = stack.curIndex + 1;
         }
 
         /// <inheritdoc cref="System.Collections.Generic.IEnumerator&lt;T&gt;"/>
@@ -104,7 +104,7 @@ public class ArrayStack<T> : IEnumerable<T>
 
         /// <inheritdoc cref="System.Collections.IEnumerator"/>
         public void Reset()
-            => this.curIndex = this.stack.arr.Length;
+            => this.curIndex = this.stack.curIndex + 1;
 
         /// <inheritdoc cref="System.Collections.IEnumerator"/>
         public void Dispose()
