@@ -1,4 +1,4 @@
-﻿namespace Hw2Task2
+namespace Hw2Task2
 {
     /// <summary>Internal class Program.</summary>
     internal class Program
@@ -43,6 +43,10 @@
             catch (DivideByZeroException)
             {
                 Console.WriteLine("Division by zero occured in calculations");
+            }
+            catch (IncorrectStackException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

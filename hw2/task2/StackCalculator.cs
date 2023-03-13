@@ -77,7 +77,11 @@ public static class StackCalculator
     public static Fraction Evaluate(IEnumerable<StackElement> expr)
     {
         IEnumerator<StackElement> enumerator = expr.GetEnumerator();
-        enumerator.MoveNext();
+        if (!enumerator.MoveNext())
+        {
+            throw new IncorrectStackException("Given stack is empty");
+        }
+
         Fraction ans = Evaluate(enumerator);
         if (enumerator.MoveNext())
         {
@@ -125,9 +129,7 @@ public static class StackCalculator
             case StackElement.Number number:
                 return number.value;
             default:
-                {
-                    throw new IncorrectStackException("Given stack is incorrect - found an element that niether a number nor a binary operation");
-                }
+                throw new IncorrectStackException("Given stack is incorrect - found an element that niether a number nor a binary operation");
         }
     }
 }
