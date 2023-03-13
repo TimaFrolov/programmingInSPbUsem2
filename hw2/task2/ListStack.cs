@@ -9,6 +9,13 @@ public class ListStack<T> : IEnumerable<T>
     private ListElement? topElement;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="ListStack&lt;T&gt;"/> class that contains no elements in it.
+    /// </summary>
+    public ListStack()
+    {
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="ListStack&lt;T&gt;"/> class that contains elements from data in it (last element from data will be at top of stack).
     /// </summary>
     /// <param name="data"> Elements to put into stack. </param>
