@@ -1,4 +1,4 @@
-﻿namespace Zipper;
+namespace Zipper;
 
 /// <summary>Internal class Program.</summary>
 internal class Program
@@ -9,7 +9,7 @@ internal class Program
     private const string SecurityExceptionMessage = "You have no permissions to open file: {0}\n";
     private const string FileNotFoundExceptionMessage = "Not found input file: {0}\n";
     private const string PathTooLongExceptionMessage = "Given file path too long: {0}\n";
-    private const string EncodeSuccessMessage = "File succesfully encoded! Output file: {0}. Compression ratio: {1}";
+    private const string EncodeSuccessMessage = "File succesfully encoded! Output file: {0}. Compression ratio: {1:N2}";
     private const string DecodeSuccessMessage = "File succesfully decoded! Output file: {0}";
 
     /// <summary>Function that called when running application.</summary>
@@ -69,7 +69,7 @@ internal class Program
                         var input = new BitReader(inputFile);
                         var output = new BitWriter(outputFile);
                         LZW.Encode(input, output);
-                        Console.WriteLine(EncodeSuccessMessage, ws.OutFile, (float)inputFile.Length / outputFile.Length);
+                        Console.WriteLine(EncodeSuccessMessage, ws.OutFile, (float)outputFile.Length / inputFile.Length);
                         input.Close();
                         output.Close();
                         break;
