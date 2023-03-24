@@ -15,7 +15,7 @@ public static class LZW
     /// </summary>
     /// <param name="input">Bit file reader for input file.</param>
     /// <param name="output">Bit file writer for output file.</param>
-    public static void Encode(BitReader input, BitWriter output)
+    public static void Encode(IReader input, IWriter output)
     {
         Trie<int> table = new (
             Enumerable.Range(0, 256)
@@ -51,7 +51,7 @@ public static class LZW
     /// </summary>
     /// <param name="input">Bit file reader for input file.</param>
     /// <param name="output">Bit file writer for output file.</param>
-    public static void Decode(BitReader input, BitWriter output)
+    public static void Decode(IReader input, IWriter output)
     {
         List<TableRecord.Some> table = Enumerable.Range(0, 256).Select(x => new TableRecord.Some((byte)x, none)).ToList();
         int tableSize = 256;
