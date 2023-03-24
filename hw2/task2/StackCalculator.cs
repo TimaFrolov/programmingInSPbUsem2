@@ -107,8 +107,6 @@ public static class StackCalculator
         {
             case StackElement.Binop binop:
                 {
-                    Fraction l, r;
-
                     if (!expr.MoveNext())
                     {
                         throw new IncorrectStackException("Given stack is incorrect - not enough numbers for evaluating binary operation");
