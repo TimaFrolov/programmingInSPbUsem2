@@ -1,0 +1,27 @@
+name: Build
+on: [push]
+jobs:
+  build-Ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "7.x"
+      - name: Build
+        run: for f in $(find . -name "*.sln"); do dotnet build $f; done
+      - name: Run tests
+        run: for f in $(find . -name "*.sln"); do dotnet test $f; done
+  build-Windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "7.x"
+      - name: Build
+        shell: bash
+        run: for f in $(find . -name "*.sln"); do dotnet build $f; done
+      - name: Run tests
+        shell: bash
+        run: for f in $(find . -name "*.sln"); do dotnet test $f; done

@@ -107,21 +107,19 @@ public static class StackCalculator
         {
             case StackElement.Binop binop:
                 {
-                    Fraction l, r;
+                    if (!expr.MoveNext())
+                    {
+                        throw new IncorrectStackException("Given stack is incorrect - not enough numbers for evaluating binary operation");
+                    }
+
+                    Fraction r = Evaluate(expr);
 
                     if (!expr.MoveNext())
                     {
                         throw new IncorrectStackException("Given stack is incorrect - not enough numbers for evaluating binary operation");
                     }
 
-                    r = Evaluate(expr);
-
-                    if (!expr.MoveNext())
-                    {
-                        throw new IncorrectStackException("Given stack is incorrect - not enough numbers for evaluating binary operation");
-                    }
-
-                    l = Evaluate(expr);
+                    Fraction l = Evaluate(expr);
 
                     return Operation(binop.type)(l, r);
                 }
@@ -151,7 +149,6 @@ public enum BinopType
 }
 
 /// <summary> Class that <see cref="StackCalculator"/> class can do calculations on. </summary>
-[System.Serializable]
 public record StackElement
 {
     /// <summary> Binary operation element. </summary>

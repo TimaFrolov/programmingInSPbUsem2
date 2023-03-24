@@ -87,9 +87,9 @@ public readonly struct Fraction
         int numerator = this.num;
         int denominator = this.den;
 
-        int maxCommonDivisor = (int)float.Min(float.Sqrt(numerator), float.Sqrt(denominator)) + 1;
+        int maxPossibleCommonDivisor = (int)float.Min(float.Sqrt(numerator), float.Sqrt(denominator)) + 1;
 
-        for (int divisor = 2; divisor < maxCommonDivisor; divisor++)
+        for (int divisor = 2; divisor < maxPossibleCommonDivisor; divisor++)
         {
             if (numerator % divisor != 0 || denominator % divisor != 0)
             {
@@ -102,7 +102,7 @@ public readonly struct Fraction
                 denominator /= divisor;
             }
             while (numerator % divisor == 0 && denominator % divisor == 0);
-            maxCommonDivisor = (int)float.Min(float.Sqrt(numerator), float.Sqrt(denominator)) + 1;
+            maxPossibleCommonDivisor = (int)float.Min(float.Sqrt(numerator), float.Sqrt(denominator)) + 1;
         }
 
         return new Fraction(numerator, denominator);
