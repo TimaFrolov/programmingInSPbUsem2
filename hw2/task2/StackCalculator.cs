@@ -149,7 +149,6 @@ public enum BinopType
 }
 
 /// <summary> Class that <see cref="StackCalculator"/> class can do calculations on. </summary>
-[System.Serializable]
 public record StackElement
 {
     /// <summary> Binary operation element. </summary>
