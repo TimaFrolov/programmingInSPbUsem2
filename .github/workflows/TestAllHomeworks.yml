@@ -1,5 +1,5 @@
 name: Build
-on: [push]
+on: [pull-request]
 jobs:
   build-Ubuntu:
     runs-on: ubuntu-latest
