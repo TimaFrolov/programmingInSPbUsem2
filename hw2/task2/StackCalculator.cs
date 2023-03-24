@@ -114,14 +114,14 @@ public static class StackCalculator
                         throw new IncorrectStackException("Given stack is incorrect - not enough numbers for evaluating binary operation");
                     }
 
-                    r = Evaluate(expr);
+                    Fraction r = Evaluate(expr);
 
                     if (!expr.MoveNext())
                     {
                         throw new IncorrectStackException("Given stack is incorrect - not enough numbers for evaluating binary operation");
                     }
 
-                    l = Evaluate(expr);
+                    Fraction l = Evaluate(expr);
 
                     return Operation(binop.type)(l, r);
                 }
