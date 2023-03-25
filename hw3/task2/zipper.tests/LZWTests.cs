@@ -14,7 +14,7 @@ public class LZWTests
         writer = new ();
         LZW.Decode(reader, writer);
         byte[] decodedData = writer.Extract();
-        Assert.AreEqual(testData, decodedData);
+        Assert.That(decodedData, Is.EqualTo(testData));
     }
 }
 
