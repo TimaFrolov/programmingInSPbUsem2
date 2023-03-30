@@ -1,4 +1,4 @@
-namespace Zipper;
+﻿namespace Zipper;
 
 /// <summary>Internal class Program.</summary>
 internal class Program
@@ -11,6 +11,8 @@ internal class Program
     private const string PathTooLongExceptionMessage = "Given file path too long: {0}\n";
     private const string EncodeSuccessMessage = "File succesfully encoded! Output file: {0}. Compression ratio: {1:N2}";
     private const string DecodeSuccessMessage = "File succesfully decoded! Output file: {0}";
+    private const string HelpMessage = "Use \"zipper -c <filename> [-o output_file] \" to compress file\n"
+    + "Use \"zipper -u <filename> [-o output_file] \" to decompress file (if no output_file specified, filename should end with .zipped)";
 
     /// <summary>Function that called when running application.</summary>
     /// <param name="args">Command line arguments.</param>
@@ -91,10 +93,7 @@ internal class Program
         switch (ws.Mode)
         {
             case Workspace.WorkMode.Help:
-                // TODO: Help message
-                break;
-            default:
-                // TODO: Error message
+                Console.WriteLine(HelpMessage);
                 break;
         }
     }
