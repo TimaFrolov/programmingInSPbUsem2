@@ -1,10 +1,10 @@
-﻿namespace hw4task1;
+namespace hw4task1;
 
 /// <summary>Internal class Program.</summary>
 internal class Program
 {
     private const string IncorrectWorkspaceMessage = "Given command arguments are incorrect: {0}\n"
-    + "Use \"zipper help\" to get help";
+    + "Use \"task1 --help\" to get help";
 
     private const string IncorrectExpressionExceptionResponse = "Given file contains incorrect expression!";
     private const string UnexpectedTokenExceptionResponse = IncorrectExpressionExceptionResponse;
