@@ -2,107 +2,95 @@ namespace hw4task2.tests;
 
 public class ListTests
 {
+    private List<int> list;
+
+    [SetUp]
+    public void Setup()
+    {
+        this.list = new ();
+    }
+
     [Test]
     public void AddElementHasSameOnTop()
     {
-        var list = new List<int>();
-
-        list.Add(1);
-        Assert.That(list.Get(0), Is.EqualTo(1));
+        this.list.Add(1);
+        Assert.That(this.list.Get(0), Is.EqualTo(1));
     }
 
     [Test]
     public void AddTwoElementsResultInLastOnTop()
     {
-        var list = new List<int>();
-
-        list.Add(3);
-        list.Add(1);
-        Assert.That(list.Get(0), Is.EqualTo(1));
+        this.list.Add(3);
+        this.list.Add(1);
+        Assert.That(this.list.Get(0), Is.EqualTo(1));
     }
 
     [Test]
     public void AddTwoElementsAndRemoveTopResultInFirstOnTop()
     {
-        var list = new List<int>();
-
-        list.Add(3);
-        list.Add(1);
-        list.Remove(1);
-        Assert.That(list.Get(0), Is.EqualTo(3));
+        this.list.Add(3);
+        this.list.Add(1);
+        this.list.Remove(1);
+        Assert.That(this.list.Get(0), Is.EqualTo(3));
     }
 
     [Test]
     public void AddElementAndRemoveItTwiceResultInException()
     {
-        var list = new List<int>();
-
-        list.Add(1);
-        list.Remove(1);
-        Assert.Throws<KeyNotFoundException>(() => list.Remove(1));
+        this.list.Add(1);
+        this.list.Remove(1);
+        Assert.Throws<KeyNotFoundException>(() => this.list.Remove(1));
     }
 
     [Test]
     public void AddAndReadFromIndexOneResultInException()
     {
-        var list = new List<int>();
-
-        list.Add(1);
-        Assert.Throws<IndexOutOfRangeException>(() => list.Get(1));
+        this.list.Add(1);
+        Assert.Throws<IndexOutOfRangeException>(() => this.list.Get(1));
     }
 
     [Test]
     public void AddTwoElementsAndGetIndexOfFirstResultInOne()
     {
-        var list = new List<int>();
-
-        list.Add(5);
-        list.Add(3);
-        Assert.That(list.IndexOf(5), Is.EqualTo(1));
+        this.list.Add(5);
+        this.list.Add(3);
+        Assert.That(this.list.IndexOf(5), Is.EqualTo(1));
     }
 
     [Test]
     public void AddTwoSameElementsAndGetIndexOfFirstResultInZero()
     {
-        var list = new List<int>();
-
-        list.Add(5);
-        list.Add(5);
-        Assert.That(list.IndexOf(5), Is.EqualTo(0));
+        this.list.Add(5);
+        this.list.Add(5);
+        Assert.That(this.list.IndexOf(5), Is.EqualTo(0));
     }
 
     [Test]
     public void ChangeTopAndGetResultInSameValue()
     {
-        var list = new List<int>();
-
-        list.Add(5);
-        list.Add(7);
-        list.Add(8);
-        list.Change(0, 10);
-        Assert.That(list.Get(0), Is.EqualTo(10));
+        this.list.Add(5);
+        this.list.Add(7);
+        this.list.Add(8);
+        this.list.Change(0, 10);
+        Assert.That(this.list.Get(0), Is.EqualTo(10));
     }
 
     [Test]
     public void ChangeTailAndGetResultInSameValue()
     {
-        var list = new List<int>();
-
-        list.Add(5);
-        list.Add(7);
-        list.Add(8);
-        list.Change(2, 10);
-        Assert.That(list.Get(2), Is.EqualTo(10));
+        this.list.Add(5);
+        this.list.Add(7);
+        this.list.Add(8);
+        this.list.Change(2, 10);
+        Assert.That(this.list.Get(2), Is.EqualTo(10));
     }
 
     [Test]
     public void ChangeIncorrectIndexResultInException()
     {
-        var list = new List<int>();
-
-        list.Add(5);
-        list.Add(7);
-        list.Add(8);
-        Assert.Throws<IndexOutOfRangeException>(() => list.Change(5, 10));
+        this.list.Add(5);
+        this.list.Add(7);
+        this.list.Add(8);
+        Assert.Throws<IndexOutOfRangeException>(() => this.list.Change(5, 10));
     }
 }
