@@ -1,14 +1,14 @@
 namespace hw4task1;
 
 /// <summary>
-/// Static class providing function to parse file into list of tokens. 
+/// Static class providing function to parse file into list of tokens.
 /// </summary>
 public static class Parser
 {
-    private static readonly Token.Add AddToken = new();
-    private static readonly Token.Sub SubToken = new();
-    private static readonly Token.Mul MulToken = new();
-    private static readonly Token.Div DivToken = new();
+    private static readonly Token.Add AddToken = new ();
+    private static readonly Token.Sub SubToken = new ();
+    private static readonly Token.Mul MulToken = new ();
+    private static readonly Token.Div DivToken = new ();
 
     /// <summary>
     /// Convert content of given file to <see cref="List&lt;Token&gt;"/>.

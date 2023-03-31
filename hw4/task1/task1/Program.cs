@@ -5,6 +5,7 @@ internal class Program
 {
     private const string IncorrectWorkspaceMessage = "Given command arguments are incorrect: {0}\n"
     + "Use \"zipper help\" to get help";
+
     private const string IncorrectExpressionExceptionResponse = "Given file contains incorrect expression!";
     private const string UnexpectedTokenExceptionResponse = IncorrectExpressionExceptionResponse;
     private const string SecurityExceptionMessage = "You have no permissions to open file: {0}\n";
@@ -29,6 +30,7 @@ internal class Program
             Console.WriteLine(IncorrectWorkspaceMessage, ex.Message);
             return;
         }
+
         switch (ws.Mode)
         {
             case Workspace.WorkMode.Normal:
@@ -83,6 +85,7 @@ internal class Program
                     {
                         file.Close();
                     }
+
                     Console.WriteLine(SuccessMessage, tree, tree.Evaluate());
                     break;
                 }
