@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:TicTacToe.ViewModels"
+    mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
+    x:CompileBindings="True"
+    x:DataType="vm:MainWindowViewModel"
+    x:Class="TicTacToe.Views.MainWindow"
+    Title="Tic Tac Toe">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <WrapPanel Margin="5,5,-5,-5" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel>
+            <TextBox Text="{Binding TopText}" IsReadOnly="True" />
+            <Grid RowDefinitions="100,100,100" ColumnDefinitions="100,100,100"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                </Grid.Styles>
+                <Button Grid.Row="0" Grid.Column="0" Content="{Binding Button1Text}" Command="{Binding OnButton1Command}" />
+                <Button Grid.Row="0" Grid.Column="1" Content="{Binding Button2Text}" Command="{Binding OnButton2Command}" />
+                <Button Grid.Row="0" Grid.Column="2" Content="{Binding Button3Text}" Command="{Binding OnButton3Command}" />
+                <Button Grid.Row="1" Grid.Column="0" Content="{Binding Button4Text}" Command="{Binding OnButton4Command}" />
+                <Button Grid.Row="1" Grid.Column="1" Content="{Binding Button5Text}" Command="{Binding OnButton5Command}" />
+                <Button Grid.Row="1" Grid.Column="2" Content="{Binding Button6Text}" Command="{Binding OnButton6Command}" />
+                <Button Grid.Row="2" Grid.Column="0" Content="{Binding Button7Text}" Command="{Binding OnButton7Command}" />
+                <Button Grid.Row="2" Grid.Column="1" Content="{Binding Button8Text}" Command="{Binding OnButton8Command}" />
+                <Button Grid.Row="2" Grid.Column="2" Content="{Binding Button9Text}" Command="{Binding OnButton9Command}" />
+            </Grid>
+        </StackPanel>
+    </WrapPanel>
+</Window>
