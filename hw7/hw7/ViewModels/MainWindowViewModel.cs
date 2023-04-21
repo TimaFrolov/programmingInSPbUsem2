@@ -49,7 +49,7 @@ public class MainWindowViewModel : ReactiveObject
     /// <summary>
     /// Gets text that should be on display.
     /// </summary>
-    public string Display => this.calculator.Num.ToString();
+    public string Display => this.calculator.WasDivisonByZeroError ? "Division by zero error!" : this.calculator.Num.ToString();
 
     /// <summary>
     /// Gets color of div button written in HEX.

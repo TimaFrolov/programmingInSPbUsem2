@@ -42,4 +42,14 @@ public class CalculatorTests
         calculator.EqualButtonClicked();
         Assert.That(calculator.Num, Is.EqualTo(21));
     }
+
+    [Test]
+    public void DivisionByZeroGivesError()
+    {
+        calculator.NumButtonClicked(1);
+        calculator.BinopButtonClicked(Binop.Div);
+        calculator.NumButtonClicked(0);
+        calculator.EqualButtonClicked();
+        Assert.That(calculator.WasDivisonByZeroError, Is.EqualTo(true));
+    }
 }

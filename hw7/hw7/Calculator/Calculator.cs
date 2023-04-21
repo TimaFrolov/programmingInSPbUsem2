@@ -1,5 +1,7 @@
 namespace hw7.Calculator;
 
+using System;
+
 /// <summary>
 /// Class representing calculator.
 /// </summary>
@@ -15,6 +17,12 @@ public class Calculator
         Num,
         Binop,
     }
+
+    /// <summary>
+    /// Gets a value indicating whether it was division by zero error after last operation.
+    /// </summary>
+    /// <value>true if it was, false otherwise.</value>
+    public bool WasDivisonByZeroError { get; private set; } = false;
 
     /// <summary>
     /// Gets current num on display.
@@ -47,8 +55,9 @@ public class Calculator
             return;
         }
 
-        if (this.lastClicked == Button.Binop)
+        if (this.lastClicked == Button.Binop || this.WasDivisonByZeroError)
         {
+            this.WasDivisonByZeroError = false;
             this.Num = num;
         }
         else
@@ -65,6 +74,11 @@ public class Calculator
     /// <param name="button">Button that clicked.</param>
     public void BinopButtonClicked(Binop button)
     {
+        if (this.WasDivisonByZeroError)
+        {
+            return;
+        }
+
         if (this.lastClicked != Button.Binop)
         {
             this.EmitBinop();
@@ -79,6 +93,7 @@ public class Calculator
     /// </summary>
     public void EraseButtonClicked()
     {
+        this.WasDivisonByZeroError = false;
         this.Num = 0;
         this.lastClicked = Button.None;
     }
@@ -88,6 +103,11 @@ public class Calculator
     /// </summary>
     public void EqualButtonClicked()
     {
+        if (this.WasDivisonByZeroError)
+        {
+            return;
+        }
+
         this.EmitBinop();
         this.Binop = Binop.None;
         this.lastClicked = Button.None;
@@ -98,7 +118,16 @@ public class Calculator
         switch (this.Binop)
         {
             case Binop.Div:
-                this.Num = this.previousNum / this.Num;
+                try
+                {
+                    this.Num = this.previousNum / this.Num;
+                }
+                catch (DivideByZeroException)
+                {
+                    this.Num = 0;
+                    this.WasDivisonByZeroError = true;
+                }
+
                 break;
             case Binop.Mul:
                 this.Num = this.previousNum * this.Num;
