@@ -59,7 +59,7 @@ public static class LZW
         TableRecord newRecord = none;
         while (!input.ReachedEOF)
         {
-            int cur = ToInt32(input.ReadBits(SymbolLengthInBits(tableSize)));
+            int cur = ToInt32(input.ReadBits(SymbolLengthInBits(tableSize + 1)));
 
             if (cur == tableSize)
             {
