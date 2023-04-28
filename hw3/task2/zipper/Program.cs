@@ -36,7 +36,6 @@ internal class Program
             try
             {
                 inputFile = new FileStream(ws.InFile, FileMode.Open);
-                outputFile = new FileStream(ws.OutFile, FileMode.OpenOrCreate);
             }
             catch (System.Security.SecurityException ex)
             {
@@ -60,6 +59,41 @@ internal class Program
             }
             catch (PathTooLongException ex)
             {
+                Console.WriteLine(PathTooLongExceptionMessage, ex.Message);
+                return;
+            }
+
+            try
+            {
+                outputFile = new FileStream(ws.OutFile, FileMode.OpenOrCreate);
+            }
+            catch (System.Security.SecurityException ex)
+            {
+                inputFile.Close();
+                Console.WriteLine(SecurityExceptionMessage, ex.Message);
+                return;
+            }
+            catch (FileNotFoundException ex)
+            {
+                inputFile.Close();
+                Console.WriteLine(FileNotFoundExceptionMessage, ex.Message);
+                return;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                inputFile.Close();
+                Console.WriteLine(SecurityExceptionMessage, ex.Message);
+                return;
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                inputFile.Close();
+                Console.WriteLine(FileNotFoundExceptionMessage, ex.Message);
+                return;
+            }
+            catch (PathTooLongException ex)
+            {
+                inputFile.Close();
                 Console.WriteLine(PathTooLongExceptionMessage, ex.Message);
                 return;
             }

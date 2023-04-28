@@ -41,7 +41,6 @@ public class Workspace
         {
             if (this.Mode != WorkMode.Help)
             {
-                // TODO: Exceptions
                 throw new WorkspaceException("No input filename was given");
             }
 
