@@ -1,38 +1,77 @@
 ﻿namespace SkipList;
 
+/// <summary>
+/// Represents SkipList <see ref="https://en.wikipedia.org/wiki/Skip_list"/> of objects.
+/// </summary>
+/// <typeparam name="T">Objects to store in list.</typeparam>
 public sealed class SkipList<T> : System.Collections.Generic.IList<T>
 where T : IComparable<T>
 {
-    private readonly int maxLevel;
+    private readonly int maxLayer;
 
     private HeadNode head;
 
-    public SkipList(int maxLevel = 15)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SkipList{T}"/> class that is empty.
+    /// </summary>
+    /// <param name="layers">Amount of layers in SkipList. Should be positive.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when layers is less than or equal to zero.</exception>
+    public SkipList(int layers = 16)
     {
-        if (maxLevel < 0)
+        if (layers <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(maxLevel));
+            throw new ArgumentOutOfRangeException(nameof(layers));
         }
 
-        this.maxLevel = maxLevel;
-        this.head = new(maxLevel);
+        this.maxLayer = layers - 1;
+        this.head = new(layers - 1);
     }
 
+    /// <summary>
+    /// Interface for SkipList nodes.
+    /// </summary>
     private interface INode
     {
+        /// <summary>
+        /// Gets next node in list.
+        /// </summary>
+        /// <value>Next node.</value>
         public ListNode? Next { get; }
 
-        public void Add(T value, int levelsFromTop);
+        /// <summary>
+        /// Adds value to list.
+        /// </summary>
+        /// <param name="value"> Value to add.</param>
+        /// <param name="layersFromThisLayer"> levels to skip from this node layer. </param>
+        public void Add(T value, int layersFromThisLayer);
 
+        /// <summary>
+        /// Returns true if value is in list after this node.
+        /// </summary>
+        /// <param name="value">Value to search for.</param>
+        /// <returns>True if value is found, false otherwise.</returns>
         public bool Contains(T value);
 
+        /// <summary>
+        /// Removes value from list.
+        /// </summary>
+        /// <param name="value">Value to remove.</param>
+        /// <returns>True if value was successfully removed, false otherwise.</returns>
         public bool Remove(T value);
     }
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public int Count { get; private set; }
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public bool IsReadOnly => false;
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
+    /// <summary>
+    /// Gets or sets the element at the specified index.
+    /// Set is not supported.
+    /// </summary>
+    /// <exception cref="NotSupportedException">Thrown when trying to set value.</exception>
     public T this[int index]
     {
         get
@@ -54,6 +93,7 @@ where T : IComparable<T>
         set => throw new NotSupportedException();
     }
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public int IndexOf(T value)
     {
         HeadNode bottomHead = this.head.GetBottom();
@@ -68,27 +108,41 @@ where T : IComparable<T>
         return node is not null && node.Value.CompareTo(value) == 0 ? index : -1;
     }
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
+    /// <summary>
+    /// Not supported.
+    /// </summary>
+    /// <exception cref="NotSupportedException">Thrown when trying to insert value.</exception>
     public void Insert(int index, T item)
         => throw new NotSupportedException();
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
+    /// <summary>
+    /// Not supported.
+    /// </summary>
+    /// <exception cref="NotSupportedException">Thrown when trying to insert value.</exception>
     public void RemoveAt(int index)
         => throw new NotSupportedException();
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public void Add(T value)
     {
         this.head.Add(value, this.RandomizeLayer());
         this.Count++;
     }
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public void Clear()
     {
-        this.head = new(this.maxLevel);
+        this.head = new(this.maxLayer);
         this.Count = 0;
     }
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public bool Contains(T value)
         => this.head.Contains(value);
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public void CopyTo(T[] array, int arrayIndex)
     {
         if (array is null)
@@ -116,6 +170,7 @@ where T : IComparable<T>
         }
     }
 
+    /// <inheritdoc cref="IList&lt;T&gt;"/>
     public bool Remove(T value)
     {
         bool ans = this.head.Remove(value);
@@ -127,39 +182,53 @@ where T : IComparable<T>
         return ans;
     }
 
+    /// <inheritdoc cref="IEnumerable&lt;T&gt;"/>
     public SkipListEnumerator GetEnumerator()
         => new(this);
 
+    /// <inheritdoc cref="IEnumerable&lt;T&gt;"/>
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
         => this.GetEnumerator();
 
+    /// <inheritdoc cref="System.Collections.IEnumerable"/>
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         => this.GetEnumerator();
 
     private int RandomizeLayer()
-        => (int)(new Random().NextSingle() * this.maxLevel) + 1;
+        => (int)(new Random().NextSingle() * this.maxLayer) + 1;
 
+    /// <summary>
+    /// Iterator over <see cref="SkipList{T}"/>.
+    /// </summary>
     public class SkipListEnumerator : IEnumerator<T>
     {
         private readonly SkipList<T> list;
         private INode? current;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkipListEnumerator"/> class.
+        /// </summary>
+        /// <param name="list"> List to iterate through. </param>
         public SkipListEnumerator(SkipList<T> list)
         {
             this.list = list;
             this.current = list.head.GetBottom();
         }
 
+        /// <inheritdoc cref="IEnumerator&lt;T&gt;"/>
         public T Current
             => this.current is ListNode node ? node.Value : throw new InvalidOperationException();
 
+        /// <inheritdoc cref="System.Collections.IEnumerator"/>
         object? System.Collections.IEnumerator.Current
             => this.Current;
 
+        /// <inheritdoc cref="IEnumerator&lt;T&gt;"/>
         public void Dispose()
         {
         }
 
+        /// <inheritdoc cref="IEnumerator&lt;T&gt;"/>
         public bool MoveNext()
         {
             if (this.current is null)
@@ -171,6 +240,7 @@ where T : IComparable<T>
             return this.current is not null;
         }
 
+        /// <inheritdoc cref="IEnumerator&lt;T&gt;"/>
         public void Reset()
             => this.current = this.list.head.GetBottom();
     }
