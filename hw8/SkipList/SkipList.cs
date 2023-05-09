@@ -1,7 +1,7 @@
 ﻿namespace SkipList;
 
 /// <summary>
-/// Represents SkipList <see ref="https://en.wikipedia.org/wiki/Skip_list"/> of objects.
+/// Represents SkipList <see href="https://en.wikipedia.org/wiki/Skip_list"/> of objects.
 /// </summary>
 /// <typeparam name="T">Objects to store in list.</typeparam>
 public sealed class SkipList<T> : System.Collections.Generic.IList<T>
@@ -292,7 +292,14 @@ where T : IComparable<T>
         }
 
         public bool Contains(T value)
-            => this.Next is null ? (this.Down is null ? false : this.Down.Contains(value)) : this.Next.Contains(value);
+        {
+            if (this.Next is not null && this.Next.Value.CompareTo(value) <= 0)
+            {
+                return this.Next.Contains(value);
+            }
+
+            return this.Down is not null && this.Down.Contains(value);
+        }
 
         public bool Remove(T value)
             => this.Next is null ? (this.Down is null ? false : this.Down.Remove(value)) : this.Next.Remove(value);
@@ -312,6 +319,9 @@ where T : IComparable<T>
         public ListNode? Down { get; private set; }
 
         public T Value { get; }
+
+        public ListNode GetBottom()
+            => this.Down is null ? this : this.Down.GetBottom();
 
         public void Add(T value, int levelsFromTop)
         {
@@ -344,12 +354,12 @@ where T : IComparable<T>
 
         public bool Contains(T value)
         {
-            if (this.Value.Equals(value))
+            if (this.Value.CompareTo(value) == 0)
             {
                 return true;
             }
 
-            if (this.Next is not null && this.Next.Value.CompareTo(value) < 0)
+            if (this.Next is not null && this.Next.Value.CompareTo(value) <= 0)
             {
                 return this.Next.Contains(value);
             }
@@ -364,7 +374,7 @@ where T : IComparable<T>
                 return this.Down is not null && this.Down.Remove(value);
             }
 
-            if (this.Next.Value.Equals(value))
+            if (this.Next.Value.CompareTo(value) == 0)
             {
                 this.Next = this.Next.Next;
                 if (this.Down is not null)
