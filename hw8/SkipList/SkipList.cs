@@ -1,4 +1,4 @@
-﻿namespace SkipList;
+namespace SkipList;
 
 /// <summary>
 /// Represents SkipList <see href="https://en.wikipedia.org/wiki/Skip_list"/> of objects.
@@ -37,27 +37,6 @@ where T : IComparable<T>
         /// </summary>
         /// <value>Next node.</value>
         public ListNode? Next { get; }
-
-        /// <summary>
-        /// Adds value to list.
-        /// </summary>
-        /// <param name="value"> Value to add.</param>
-        /// <param name="layersFromThisLayer"> levels to skip from this node layer. </param>
-        public void Add(T value, int layersFromThisLayer);
-
-        /// <summary>
-        /// Returns true if value is in list after this node.
-        /// </summary>
-        /// <param name="value">Value to search for.</param>
-        /// <returns>True if value is found, false otherwise.</returns>
-        public bool Contains(T value);
-
-        /// <summary>
-        /// Removes value from list.
-        /// </summary>
-        /// <param name="value">Value to remove.</param>
-        /// <returns>True if value was successfully removed, false otherwise.</returns>
-        public bool Remove(T value);
     }
 
     /// <inheritdoc cref="IList&lt;T&gt;"/>
