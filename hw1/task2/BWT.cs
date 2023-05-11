@@ -14,6 +14,9 @@ namespace Task2
         /// <returns>Encoded string.</returns>
         public static string Encode(string str, out int indexOfLastChar)
         {
+            // Generating suffix array using algorithm from: 
+            // https://www.geeksforgeeks.org/suffix-array-set-2-a-nlognlogn-algorithm/
+            // https://web.stanford.edu/class/cs97si/suffix-array.pdf
             Suffix[] suffixes = str.Select((char c, int index) => new Suffix(index, c, 0)).ToArray();
 
             for (var i = 0; i < str.Length - 1; i++)
