@@ -54,22 +54,22 @@ public class MainWindowViewModel : ReactiveObject
     /// <summary>
     /// Gets color of div button written in HEX.
     /// </summary>
-    public string DivButtonColor => this.calculator.Binop == Binop.Div ? LitButtonColor : DimButtonColor;
+    public string DivButtonColor => this.CurrentButton == Binop.Div ? LitButtonColor : DimButtonColor;
 
     /// <summary>
     /// Gets color of mul button written in HEX.
     /// </summary>
-    public string MulButtonColor => this.calculator.Binop == Binop.Mul ? LitButtonColor : DimButtonColor;
+    public string MulButtonColor => this.CurrentButton == Binop.Mul ? LitButtonColor : DimButtonColor;
 
     /// <summary>
     /// Gets color of add button written in HEX.
     /// </summary>
-    public string AddButtonColor => this.calculator.Binop == Binop.Add ? LitButtonColor : DimButtonColor;
+    public string AddButtonColor => this.CurrentButton == Binop.Add ? LitButtonColor : DimButtonColor;
 
     /// <summary>
     /// Gets color of sub button written in HEX.
     /// </summary>
-    public string SubButtonColor => this.calculator.Binop == Binop.Sub ? LitButtonColor : DimButtonColor;
+    public string SubButtonColor => this.CurrentButton == Binop.Sub ? LitButtonColor : DimButtonColor;
 
     /// <summary>
     /// Gets command should be done on button 0 click.

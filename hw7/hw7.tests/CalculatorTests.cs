@@ -52,4 +52,24 @@ public class CalculatorTests
         calculator.EqualButtonClicked();
         Assert.That(calculator.WasDivisonByZeroError, Is.EqualTo(true));
     }
+
+    [Test]
+    public void SevenDivideByTwoIsThree()
+    {
+        calculator.NumButtonClicked(7);
+        calculator.BinopButtonClicked(Binop.Div);
+        calculator.NumButtonClicked(2);
+        calculator.EqualButtonClicked();
+        Assert.That(calculator.Num, Is.EqualTo(3));
+    }
+
+    [Test]
+    public void TooBigInt()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            calculator.NumButtonClicked(1);
+        }
+        Assert.That(calculator.Num, Is.EqualTo(1111111111));
+    }
 }

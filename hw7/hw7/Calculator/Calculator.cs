@@ -9,14 +9,7 @@ public class Calculator
 {
     private int previousNum = 0;
     private Binop binop = Binop.None;
-    private Button lastClicked = Button.None;
-
-    private enum Button
-    {
-        None,
-        Num,
-        Binop,
-    }
+    private bool lastClickedWasBinop = false;
 
     /// <summary>
     /// Gets a value indicating whether it was division by zero error after last operation.
@@ -55,17 +48,17 @@ public class Calculator
             return;
         }
 
-        if (this.lastClicked == Button.Binop || this.WasDivisonByZeroError)
+        if (this.lastClickedWasBinop || this.WasDivisonByZeroError)
         {
             this.WasDivisonByZeroError = false;
             this.Num = num;
         }
-        else
+        else if (this.Num < int.MaxValue / 10)
         {
             this.Num = (this.Num * 10) + num;
         }
 
-        this.lastClicked = Button.Num;
+        this.lastClickedWasBinop = false;
     }
 
     /// <summary>
@@ -79,13 +72,13 @@ public class Calculator
             return;
         }
 
-        if (this.lastClicked != Button.Binop)
+        if (!this.lastClickedWasBinop)
         {
             this.EmitBinop();
         }
 
         this.Binop = button;
-        this.lastClicked = Button.Binop;
+        this.lastClickedWasBinop = true;
     }
 
     /// <summary>
@@ -95,7 +88,7 @@ public class Calculator
     {
         this.WasDivisonByZeroError = false;
         this.Num = 0;
-        this.lastClicked = Button.None;
+        this.lastClickedWasBinop = false;
     }
 
     /// <summary>
@@ -110,7 +103,7 @@ public class Calculator
 
         this.EmitBinop();
         this.Binop = Binop.None;
-        this.lastClicked = Button.None;
+        this.lastClickedWasBinop = false;
     }
 
     private void EmitBinop()
@@ -118,11 +111,11 @@ public class Calculator
         switch (this.Binop)
         {
             case Binop.Div:
-                try
+                if (this.Num != 0)
                 {
                     this.Num = this.previousNum / this.Num;
                 }
-                catch (DivideByZeroException)
+                else
                 {
                     this.Num = 0;
                     this.WasDivisonByZeroError = true;
