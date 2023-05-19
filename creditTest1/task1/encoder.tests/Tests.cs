@@ -2,7 +2,7 @@ namespace encoder.tests;
 
 public class Tests
 {
-    private static readonly List<(List<byte> source, List<byte> encoded)> EncodingTestCases = new List<(List<byte>, List<byte>)>
+    private static readonly List<(List<byte> source, List<byte> encoded)> TestCases = new List<(List<byte>, List<byte>)>
     {
         (new List<byte> { 1, 1, 1, 1, 1, 1 }, new List<byte> { 6, 1 }),
         (new List<byte> { 1, 1, 1, 2, 1, 1 }, new List<byte> { 3, 1, 1, 2, 2, 1 }),
@@ -10,14 +10,14 @@ public class Tests
     };
 
 
-    [TestCaseSource(nameof(EncodingTestCases))]
+    [TestCaseSource(nameof(TestCases))]
     public void EncodeTest((List<byte> source, List<byte> encoded) testCase)
     {
         Assert.That(Encoder.Encode(testCase.source).encodedData, Is.EqualTo(testCase.encoded));
     }
 
 
-    [TestCaseSource(nameof(EncodingTestCases))]
+    [TestCaseSource(nameof(TestCases))]
     public void DecodeTest((List<byte> source, List<byte> encoded) testCase)
     {
         Assert.That(Encoder.Decode(testCase.encoded), Is.EqualTo(testCase.source));

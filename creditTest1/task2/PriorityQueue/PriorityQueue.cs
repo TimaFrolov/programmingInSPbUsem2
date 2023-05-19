@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// <typeparam name="T">Values that queue can hold in it.</typeparam>
 public sealed class PriorityQueue<T>
 {
-    private SortedDictionary<int, Queue<T>> data = new ();
+    private SortedDictionary<int, Queue<T>> queues = new ();
 
     private int count = 0;
 
@@ -24,12 +24,12 @@ public sealed class PriorityQueue<T>
     /// <param name="priority">Priority of new value.</param>
     public void Enqueue(T value, int priority)
     {
-        if (!this.data.ContainsKey(priority))
+        if (!this.queues.ContainsKey(priority))
         {
-            this.data[priority] = new Queue<T>();
+            this.queues[priority] = new Queue<T>();
         }
 
-        this.data[priority].Enqueue(value);
+        this.queues[priority].Enqueue(value);
         this.count++;
     }
 
@@ -45,12 +45,12 @@ public sealed class PriorityQueue<T>
             throw new InvalidOperationException("Queue is empty");
         }
 
-        var maxPriority = this.data.Keys.Max()!;
-        T ans = this.data[maxPriority].Dequeue();
+        var maxPriority = this.queues.Keys.Max()!;
+        T ans = this.queues[maxPriority].Dequeue();
         this.count--;
-        if (this.data[maxPriority].Count == 0)
+        if (this.queues[maxPriority].Count == 0)
         {
-            this.data.Remove(maxPriority);
+            this.queues.Remove(maxPriority);
         }
 
         return ans;
