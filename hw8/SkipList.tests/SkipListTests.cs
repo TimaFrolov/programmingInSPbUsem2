@@ -23,7 +23,6 @@ public class SkipListTests
     [Test]
     public void AppendResultsInSortedOrderAndCorrectCount()
     {
-
         Assert.That(this.list[0], Is.EqualTo(1));
         Assert.That(this.list[1], Is.EqualTo(2));
         Assert.That(this.list[2], Is.EqualTo(2));

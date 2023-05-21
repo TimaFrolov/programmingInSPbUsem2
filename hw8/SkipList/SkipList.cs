@@ -7,6 +7,8 @@ namespace SkipList;
 public sealed class SkipList<T> : System.Collections.Generic.IList<T>
 where T : IComparable<T>
 {
+    private static readonly Random Random = new();
+
     private readonly int maxLayer;
 
     private HeadNode head;
@@ -50,6 +52,7 @@ where T : IComparable<T>
     /// Gets or sets the element at the specified index.
     /// Set is not supported.
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when index is less than zero or greater than or equal to <see cref="Count"/>.</exception>
     /// <exception cref="NotSupportedException">Thrown when trying to set value.</exception>
     public T this[int index]
     {
@@ -174,7 +177,7 @@ where T : IComparable<T>
         => this.GetEnumerator();
 
     private int RandomizeLayer()
-        => (int)(new Random().NextSingle() * this.maxLayer) + 1;
+        => (int)(Random.NextSingle() * this.maxLayer) + 1;
 
     /// <summary>
     /// Iterator over <see cref="SkipList{T}"/>.
@@ -212,7 +215,7 @@ where T : IComparable<T>
         {
             if (this.current is null)
             {
-                throw new InvalidOperationException();
+                return false;
             }
 
             this.current = this.current.Next;
@@ -281,7 +284,14 @@ where T : IComparable<T>
         }
 
         public bool Remove(T value)
-            => this.Next is null ? (this.Down is null ? false : this.Down.Remove(value)) : this.Next.Remove(value);
+        {
+            if (this.Next is not null && this.Next.Value.CompareTo(value) <= 0)
+            {
+                return this.Next.Remove(value);
+            }
+
+            return this.Down is not null && this.Down.Remove(value);
+        }
     }
 
     private class ListNode : INode
